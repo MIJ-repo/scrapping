@@ -11,7 +11,7 @@ from database import Database
 database = Database()
 
 base_url = "https://www.uniqlo.com"
-base_page = "https://www.uniqlo.com/jp/store/feature/uq/sale/men/"
+base_page = "https://www.uniqlo.com/jp/store/feature/uq/new/men/"
 driver.implicitly_wait(50)
 driver.get(base_page)
 driver.find_elements(By.CLASS_NAME, 'unit')
@@ -28,31 +28,33 @@ for product in products:
     sub_category_name = 'uniqlo' ## 4
     name_ja = product.select_one(".name > a").getText() ## 5
     name_vi = name_ja ## 6
-    brand = 'uniqlo'
-    unit_price = product.select_one(".price").getText().replace('¥', '').replace(',', '').replace('\n', '').replace(' ', '') ## 7
-    type = 'Uniqlo nam giảm giá' ## 8
-    packing = 'origin' ## 9
-    use_guide = None ## 10
-    description = None ## 11
-    age_gt = None ## 12
-    age_lt = None ## 13
-    sex = 'male' ## 14
+    brand = 'uniqlo' #7
+    unit_price = product.select_one(".price").getText().replace('¥', '').replace(',', '').replace('\n', '').replace(' ', '') ## 8
+    old_price = None #9
+    type = 'Uniqlo nam mới nhất' ## 10
+    packing = 'origin' ## 11
+    use_guide = None ## 12
+    description = None ## 13
+    age_gt = None ## 14
+    age_lt = None ## 15
+    sex = 'Nam' ## 16
+    size = 'xs,s,m,l,xl,xxl,3xl'
     color = product.select('.l3_alias_color_chip > img')
     for i in range(len(color)):
         color[i] = 'https:' + color[i].attrs['color_chip_image']
-    color = ','.join(color) ## 15
-    image = product.select_one(".thumb > a > img").attrs['color_chip_image'] ## 16
-    origin_product_code = 'uniqlo-' + product.select_one(".l3_alias_color_chip").attrs['data-item-code'] ## 17
+    color = ','.join(color) ## 17
+    image = product.select_one(".thumb > a > img").attrs['color_chip_image'] ## 18
+    origin_product_code = 'uniqlo-' + product.select_one(".l3_alias_color_chip").attrs['data-item-code'] ## 19
     url = product.select_one(".info > .name > a").attrs['href'].replace(base_url, '')
-    origin_url = base_url + url ## 18
-    active_status = 1 ## 19
-    stock_status = 1 ## 20
-    sale_status = 1 ## 21
-    created = datetime.now().strftime("%Y-%m-%d %H:%M:%S") ## 22
-    data_base = (category_id, sub_category_id, category_name, sub_category_name, name_vi, name_ja, brand, unit_price, type, packing, use_guide, description, age_gt, age_lt, sex, color, image, origin_product_code, origin_url, active_status, stock_status, sale_status, created)
+    origin_url = base_url + url ## 20
+    active_status = 1 ## 21
+    stock_status = 1 ## 22
+    sale_status = 1 ## 23
+    created = datetime.now().strftime("%Y-%m-%d %H:%M:%S") ## 24
+    data_base = (category_id, sub_category_id, category_name, sub_category_name, name_vi, name_ja, brand, unit_price, old_price, type, packing, use_guide, description, age_gt, age_lt, sex, size, color, image, origin_product_code, origin_url, active_status, stock_status, sale_status, created)
 
-    # print(data_base)
-    # print('-------------------------------------------------------------')
+    print(data_base)
+    print('-------------------------------------------------------------')
     database.insertProduct(data_base)
     # exit()
 
