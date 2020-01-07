@@ -68,14 +68,20 @@ class Database:
             print(error)
             print('-------------------------------------------------')
 
-    # def updateUniqloActiveStatus(self, id):
-    #     sql = 'UPDATE `product` set `active_status` = 0 where `id` = %s'
-    #     try:
-    #         self.db.execute(sql, (id,))
-    #         self.connect.commit()
-    #         print('Product ID ' + str(id) + ' active status saved')
-    #         print('*************************************************')
-    #     except mysql.connector.Error as error :
-    #         self.connect.rollback()
-    #         print(error)
-    #         print('-------------------------------------------------')
+    def selectProductMainImage(self):
+        sql = "SELECT `id`, `origin_product_code`, `category_name`, `sub_category_name`, `image` FROM `product` where `sub_category_name` = 'uniqlo' and active_status = 1"
+        self.db.execute(sql)
+        result = self.db.fetchall()
+        return result
+
+    def updateProductMainImage(self, url, id):
+        sql = "UPDATE `product` set `image` = %s where `id` = %s"
+        try:
+            self.db.execute(sql, (url, id))
+            self.connect.commit()
+            print('Product ID ' + str(id) + ' main image saved')
+            print('*************************************************')
+        except mysql.connector.Error as error :
+            self.connect.rollback()
+            print(error)
+            print('-------------------------------------------------')
