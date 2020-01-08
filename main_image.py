@@ -13,9 +13,9 @@ database = Database()
 # f.close()
 # request.urlretrieve('https://www.matsukiyo.co.jp/store/image/4987084410979_t1', '/home/long/Desktop/4987084410979_t1')
 # exit()
-products = database.selectProductMainImage()
-main_path = '/home/long/Desktop/product_img/'
-main_url = 'https://mij.vn/laravel-filemanager/images/shares/product/'
+products = database.selectProductByCategory('shoes')
+# main_path = '/home/long/Desktop/product_img/'
+# main_url = 'https://mij.vn/laravel-filemanager/images/shares/product/'
 for product in products:
     print(product)
     exit()

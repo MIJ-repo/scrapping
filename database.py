@@ -31,7 +31,7 @@ class Database:
     def selectProductByCategory(self, category_name):
         # print(category_name)
         # exit()
-        sql = "SELECT `id`, `origin_url` FROM `product` where `category_name` = %s and `id` >= 10301"
+        sql = "SELECT `id`, `origin_url` FROM `product` where `category_name` = %s and id >= 9173"
         self.db.execute(sql, (category_name,))
         result = self.db.fetchall()
         return result
@@ -56,7 +56,7 @@ class Database:
             print(error)
             print('-------------------------------------------------')
 
-    def updateUniqloStatus(self, id):
+    def updateStatus(self, id):
         sql = 'UPDATE `product` set `stock_status` = 0, `active_status` = 0 where `id` = %s'
         try:
             self.db.execute(sql, (id,))
@@ -69,7 +69,7 @@ class Database:
             print('-------------------------------------------------')
 
     def selectProductMainImage(self):
-        sql = "SELECT `id`, `origin_product_code`, `category_name`, `sub_category_name`, `image` FROM `product` where `sub_category_name` = 'uniqlo' and active_status = 1"
+        sql = "SELECT `id`, `origin_product_code`, `category_name`, `sub_category_name`, `image` FROM `product` where `category_name` = 'shoes'"
         self.db.execute(sql)
         result = self.db.fetchall()
         return result
@@ -80,6 +80,18 @@ class Database:
             self.db.execute(sql, (url, id))
             self.connect.commit()
             print('Product ID ' + str(id) + ' main image saved')
+            print('*************************************************')
+        except mysql.connector.Error as error :
+            self.connect.rollback()
+            print(error)
+            print('-------------------------------------------------')
+
+    def updateSize(self, size, id):
+        sql = "UPDATE `product` set `size` = %s where `id` = %s"
+        try:
+            self.db.execute(sql, (size, id))
+            self.connect.commit()
+            print('Product '+ str(id) + ' size ' + size + ' updated')
             print('*************************************************')
         except mysql.connector.Error as error :
             self.connect.rollback()

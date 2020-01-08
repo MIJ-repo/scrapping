@@ -6,7 +6,7 @@ database = Database()
 
 category_name = 'shoes'
 
-products = database.selectProduct(category_name)
+products = database.selectProductByCategory(category_name)
 for product in products:
     # print(product)
     # exit()
