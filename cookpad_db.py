@@ -21,10 +21,10 @@ class Database:
         return result
 
     def selectCategoryByUrl(self, origin_url):
-        sql = "SELECT `id`, `origin_url` FROM `category` where `origin_url` = %s"
+        sql = "SELECT `id` FROM `category` where `origin_url` = %s"
         self.db.execute(sql, (origin_url,))
         result = self.db.fetchall()
-        return result
+        return result[0]
 
     def insertCategory(self, data):
         
