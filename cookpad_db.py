@@ -38,6 +38,12 @@ class Database:
         result = self.db.fetchall()
         return result
 
+    def getChildrenCategoryByParentIdExcept(self, parents_id):
+        sql = "SELECT `id`, `origin_url` from `category` where `group_id` = %s and id > 55"
+        self.db.execute(sql, (parents_id,))
+        result = self.db.fetchall()
+        return result
+
     def insertCategory(self, data):
         
         sql = "INSERT INTO `category` (`parent_flag`, `group_id`, `name_en`, `name_jp`, `origin_url`, `image`, `meta_title`, `meta_description`, `meta_keywords`, `active_status`, `created`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -51,7 +57,7 @@ class Database:
             print('-------------------------------------------------')
 
     def insertProductOriginUrl(self, data):
-        sql = "INSERT INTO `product` (`category_id`, `origin_url`, `created`) VALUES (%s, %s, %s)"
+        sql = "INSERT INTO `product` (`category_id`, `code`, `origin_url`, `created`) VALUES (%s, %s, %s, %s)"
         try:
             self.db.execute(sql, data)
             self.connect.commit()
