@@ -31,7 +31,7 @@ class Database:
     def selectProductByCategory(self, category_name):
         # print(category_name)
         # exit()
-        sql = "SELECT `id`, `origin_url` FROM `product` where `category_name` = %s and id >= 9173"
+        sql = "SELECT `id`, `origin_url` FROM `product` where `category_name` = %s and id > 34946"
         self.db.execute(sql, (category_name,))
         result = self.db.fetchall()
         return result

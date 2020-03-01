@@ -66,3 +66,43 @@ class Database:
             self.connect.rollback()
             print(error)
             print('-------------------------------------------------')
+
+    def selectProduct(self):
+        sql = "SELECT `id`, `origin_url` FROM `product` where `id` > 43024"
+        self.db.execute(sql)
+        result = self.db.fetchall()
+        return result
+
+    def updateProduct(self, name, description, image, memo, people_quantity, id):
+        sql = "UPDATE `product` set `name` = %s, `description` = %s, `image` = %s, `memo` = %s, `people_quantity` = %s where `id` = %s"
+        try:
+            self.db.execute(sql, (name, description, image, memo, people_quantity, id))
+            self.connect.commit()
+            print('Product ID ' + str(id) + ' updated')
+        except mysql.connector.Error as error :
+            self.connect.rollback()
+            print('Product ID ' + str(id) + ' update fail')
+            print(error)
+    
+    def insertMaterial(self, data):
+        sql = "INSERT INTO `material` (`product_id`, `name`, `quantity`, `created`) VALUES (%s, %s, %s, %s)"
+        try:
+            self.db.execute(sql, data)
+            self.connect.commit()
+            print('Product material saved')
+        except mysql.connector.Error as error :
+            self.connect.rollback()
+            print('Material insert fail')
+            print(error)
+
+    def insertStep(self, data):
+        sql = "INSERT INTO `step` (`product_id`, `ordinal`, `content`, `image`, `created`) VALUES (%s, %s, %s, %s, %s)"
+        try:
+            self.db.execute(sql, data)
+            self.connect.commit()
+            print('Product step saved')
+        except mysql.connector.Error as error :
+            self.connect.rollback()
+            print('Step insert fail')
+            print(error)
+            print('-------------------------------------------------')
