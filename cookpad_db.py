@@ -68,7 +68,7 @@ class Database:
             print('-------------------------------------------------')
 
     def selectProduct(self):
-        sql = "SELECT `id`, `origin_url` FROM `product` where `id` > 43024"
+        sql = "SELECT `id`, `origin_url` FROM `product` where `id` > 155628"
         self.db.execute(sql)
         result = self.db.fetchall()
         return result
